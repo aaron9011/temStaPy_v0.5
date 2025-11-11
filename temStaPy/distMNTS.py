@@ -30,7 +30,9 @@ def rmnts(strPMNTS, numofsample, rW=None, rTau=None):
     beta = np.array(strPMNTS["beta"]).reshape(1, N)
     gamma = np.sqrt(1 - beta**2 * (2 - strPMNTS["alpha"]) / (2 * strPMNTS["theta"]))
     gamma = gamma.reshape(1, N)
-    reps = np.dot(chol(strPMNTS["Rho"]).T, rW.T).T
+    #reps = np.dot(chol(strPMNTS["Rho"]).T, rW.T).T
+    #print('Check')
+    reps = (chol(strPMNTS["Rho"]) @ rW.T).T
     rTau = np.array(rTau).reshape(-1, 1)
     rstdmnts = ((rTau - 1) @ beta) + (np.sqrt(rTau) * (reps @ np.diag(gamma[0])))
     res_rmnts = rstdmnts @ np.diag(strPMNTS["sigma"]) + np.array(
